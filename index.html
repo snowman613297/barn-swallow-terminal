@@ -38,18 +38,18 @@
         .output {
             margin: 5px 0;
         }
-        #swallow-image {
-            max-width: 300px;
+        .swallow-image {
+            max-width: 100%;
+            max-height: 300px;
+            display: block;
             margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div id="terminal"></div>
-    <img id="swallow-image" src="https://images.squarespace-cdn.com/content/v1/51990477e4b0f50f41c3d666/1486832550099-A5DZ6OIJ1GCV4ADULWSN/barn-swallow-singing_THP.jpg?format=2500w" alt="Barn Swallow" style="display:none;">
     <script>
         const terminal = document.getElementById("terminal");
-        const swallowImage = document.getElementById("swallow-image");
 
         const history = [];
         let historyIndex = -1;
@@ -64,14 +64,18 @@ Diet: Insects, primarily caught mid-flight.
 Description: A small migratory bird with a forked tail and metallic blue back.
             `,
             call: "Cheep-cheep! Cheep-cheep-cheep! Tweet-tweet!",
-            fly: "The barn swallow takes flight, soaring through the skies in graceful loops. Watch it glide!",
+            fly: `
+The barn swallow takes flight, soaring through the skies in graceful loops. Watch it glide!
+<em>The image of a barn swallow appears below:</em>
+<img src="https://images.squarespace-cdn.com/content/v1/51990477e4b0f50f41c3d666/1486832550099-A5DZ6OIJ1GCV4ADULWSN/barn-swallow-singing_THP.jpg?format=2500w" alt="Barn Swallow" class="swallow-image">
+            `,
             exit: "Goodbye! Refresh the page to restart.",
         };
 
         function addOutput(text) {
             const output = document.createElement("div");
             output.classList.add("output");
-            output.textContent = text;
+            output.innerHTML = text;  // Use innerHTML to allow HTML content like images
             terminal.appendChild(output);
             terminal.scrollTop = terminal.scrollHeight;
         }
@@ -107,9 +111,6 @@ Description: A small migratory bird with a forked tail and metallic blue back.
 
                 if (command in commands) {
                     addOutput(commands[command]);
-                    if (command === "fly") {
-                        swallowImage.style.display = 'block';  // Show the barn swallow image
-                    }
                     if (command === "exit") return;
                 } else {
                     addOutput("Unknown command. Type 'help' for a list of commands.");
