@@ -38,26 +38,33 @@
         .output {
             margin: 5px 0;
         }
+        #swallow-image {
+            max-width: 300px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="terminal"></div>
+    <img id="swallow-image" src="https://images.squarespace-cdn.com/content/v1/51990477e4b0f50f41c3d666/1486832550099-A5DZ6OIJ1GCV4ADULWSN/barn-swallow-singing_THP.jpg?format=2500w" alt="Barn Swallow" style="display:none;">
     <script>
         const terminal = document.getElementById("terminal");
+        const swallowImage = document.getElementById("swallow-image");
 
         const history = [];
         let historyIndex = -1;
 
         const commands = {
-            help: "Commands: help, info, call, exit",
+            help: "Commands: help, info, call, fly, exit",
             info: `
-                === Barn Swallow Information ===
-                Scientific Name: Hirundo rustica
-                Habitat: Open fields, farmland, near water.
-                Diet: Insects, primarily caught mid-flight.
-                Description: A small migratory bird with a forked tail and metallic blue back.
+=== Barn Swallow Information ===
+Scientific Name: Hirundo rustica
+Habitat: Open fields, farmland, near water.
+Diet: Insects, primarily caught mid-flight.
+Description: A small migratory bird with a forked tail and metallic blue back.
             `,
             call: "Cheep-cheep! Cheep-cheep-cheep! Tweet-tweet!",
+            fly: "The barn swallow takes flight, soaring through the skies in graceful loops. Watch it glide!",
             exit: "Goodbye! Refresh the page to restart.",
         };
 
@@ -100,6 +107,9 @@
 
                 if (command in commands) {
                     addOutput(commands[command]);
+                    if (command === "fly") {
+                        swallowImage.style.display = 'block';  // Show the barn swallow image
+                    }
                     if (command === "exit") return;
                 } else {
                     addOutput("Unknown command. Type 'help' for a list of commands.");
